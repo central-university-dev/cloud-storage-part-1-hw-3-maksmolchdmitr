@@ -1,0 +1,30 @@
+package maks.molch.dmitr.network.handler;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import maks.molch.dmitr.data.ResponseData;
+import org.springframework.lang.NonNull;
+
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
+    private final List<ResponseData> responses;
+    private final CountDownLatch responseLatch;
+
+    public ClientInboundHandler(List<ResponseData> responses, CountDownLatch responseLatch) {
+        this.responses = responses;
+        this.responseLatch = responseLatch;
+    }
+
+    @Override
+    public void channelRead(@NonNull ChannelHandlerContext ctx, @NonNull Object msg) {
+        ResponseData responseData = (ResponseData) msg;
+        responses.add(responseData);
+        if (responseData.isSuccess()) {
+            System.out.println("You was successfully connected :)");
+            ctx.close();
+        }
+        responseLatch.countDown();
+    }
+}
