@@ -6,15 +6,15 @@ import maks.molch.dmitr.data.ResponseData;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 
 public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
     private final List<ResponseData> responses;
-    private final CountDownLatch responseLatch;
+    private final Semaphore responseSemaphore;
 
-    public ClientInboundHandler(List<ResponseData> responses, CountDownLatch responseLatch) {
+    public ClientInboundHandler(List<ResponseData> responses, Semaphore responseSemaphore) {
         this.responses = responses;
-        this.responseLatch = responseLatch;
+        this.responseSemaphore = responseSemaphore;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
             System.out.println("You was successfully connected :)");
             ctx.close();
         }
-        responseLatch.countDown();
+        responseSemaphore.release();
     }
 }

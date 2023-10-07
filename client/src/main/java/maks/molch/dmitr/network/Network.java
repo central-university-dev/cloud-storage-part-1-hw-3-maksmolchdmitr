@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -27,7 +27,7 @@ public class Network {
     public AtomicBoolean wasConnected = new AtomicBoolean(false);
     public AtomicBoolean wasCrashed = new AtomicBoolean(false);
     private final List<ResponseData> responses = new ArrayList<>();
-    private final CountDownLatch responseLatch = new CountDownLatch(1);
+    private final Semaphore responseSemaphore = new Semaphore(0);
 
     public Network(ServerConfig serverConfig) {
         new Thread(() -> {
@@ -44,7 +44,7 @@ public class Network {
                                         .addLast(
                                                 new ResponseDataDecoder(),
                                                 new RequestDataEncoder(),
-                                                new ClientInboundHandler(responses, responseLatch)
+                                                new ClientInboundHandler(responses, responseSemaphore)
                                         );
                             }
                         });
@@ -65,7 +65,7 @@ public class Network {
     }
 
     public ResponseData waitServerResponse() throws InterruptedException {
-        responseLatch.await();
+        responseSemaphore.acquire();
         return responses.get(responses.size() - 1);
     }
 
