@@ -9,9 +9,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import maks.molch.dmitr.config.ServerConfig;
-import maks.molch.dmitr.network.handler.AuthenticationHandler;
-import maks.molch.dmitr.network.handler.RequestDecoder;
-import maks.molch.dmitr.network.handler.ResponseEncoder;
+import maks.molch.dmitr.handler.AuthenticationHandler;
+import maks.molch.dmitr.handler.RequestDecoder;
+import maks.molch.dmitr.handler.ResponseEncoder;
+import maks.molch.dmitr.service.Authenticator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,9 +23,11 @@ import org.springframework.lang.NonNull;
 @SpringBootApplication
 public class ServerApplication {
     private final ServerConfig serverConfig;
+    private final Authenticator authenticator;
 
-    public ServerApplication(ServerConfig serverConfig) {
+    public ServerApplication(ServerConfig serverConfig, Authenticator authenticator) {
         this.serverConfig = serverConfig;
+        this.authenticator = authenticator;
     }
 
     public static void main(String[] args) {
@@ -43,7 +46,7 @@ public class ServerApplication {
                         @Override
                         protected void initChannel(@NonNull SocketChannel ch) {
                             ch.pipeline()
-                                    .addLast(new RequestDecoder(), new ResponseEncoder(), new AuthenticationHandler());
+                                    .addLast(new RequestDecoder(), new ResponseEncoder(), new AuthenticationHandler(authenticator));
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)

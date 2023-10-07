@@ -1,4 +1,4 @@
-package maks.molch.dmitr.network.handler;
+package maks.molch.dmitr.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -21,10 +21,6 @@ public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(@NonNull ChannelHandlerContext ctx, @NonNull Object msg) {
         ResponseData responseData = (ResponseData) msg;
         responses.add(responseData);
-        if (responseData.isSuccess()) {
-            System.out.println("You was successfully connected :)");
-            ctx.close();
-        }
         responseSemaphore.release();
     }
 }

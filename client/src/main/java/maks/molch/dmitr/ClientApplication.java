@@ -2,6 +2,7 @@ package maks.molch.dmitr;
 
 import maks.molch.dmitr.config.ServerConfig;
 import maks.molch.dmitr.data.RequestData;
+import maks.molch.dmitr.data.ResponseData;
 import maks.molch.dmitr.network.Network;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -43,7 +44,11 @@ public class ClientApplication {
             String username = ReadStr("Enter username > ", in);
             String password = ReadStr("Enter password > ", in);
             network.sendRequest(new RequestData(username, password));
-            System.out.println("Server: " + network.waitServerResponse());
+            ResponseData responseData = network.waitServerResponse();
+            System.out.println("Server: " + responseData);
+            if (responseData.isSuccess()) {
+                System.out.println("You was successfully authorized :)");
+            }
         }
         System.out.println("Buy!");
         network.close();

@@ -10,9 +10,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import maks.molch.dmitr.config.ServerConfig;
 import maks.molch.dmitr.data.RequestData;
 import maks.molch.dmitr.data.ResponseData;
-import maks.molch.dmitr.network.handler.ClientInboundHandler;
-import maks.molch.dmitr.network.handler.RequestDataEncoder;
-import maks.molch.dmitr.network.handler.ResponseDataDecoder;
+import maks.molch.dmitr.handler.ClientInboundHandler;
+import maks.molch.dmitr.handler.RequestDataEncoder;
+import maks.molch.dmitr.handler.ResponseDataDecoder;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 

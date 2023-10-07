@@ -1,4 +1,4 @@
-package maks.molch.dmitr.network.handler;
+package maks.molch.dmitr.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
