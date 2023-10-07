@@ -15,6 +15,6 @@
 
 # Example of using  
 * After second successful authorizing
-![img_1.png](img_1.png)  
+![img_1.png](images/img_1.png)  
 * After three failed attempts
-![img_2.png](img_2.png)  
+![img_2.png](images/img_2.png)  
