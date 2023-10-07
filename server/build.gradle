@@ -1,6 +1,14 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'application'
 }
+
+application {
+    mainClassName = 'src/main/java/maks/molch/dmitr/ServerApplication.java'
+}
+
+apply plugin: 'io.spring.dependency-management'
 
 group = 'maks.molch.dmitr'
 version = '1.0-SNAPSHOT'

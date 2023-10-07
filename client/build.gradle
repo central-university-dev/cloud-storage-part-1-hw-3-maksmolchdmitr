@@ -1,5 +1,13 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'application'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+application {
+    mainClassName = 'src/main/java/maks/molch/dmitr/ClientApplication.java'
 }
 
 group = 'maks.molch.dmitr'
@@ -14,6 +22,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.springframework.boot:spring-boot-starter:3.1.4'
     implementation 'io.netty:netty-all:4.1.95.Final'
+}
+
+run {
+    standardInput = System.in
 }
 
 test {
