@@ -11,4 +11,10 @@
 "isSuccess" - true or false,  
 "message" - string with message from server,  
 "countAttempts" - count of auth attempts  
-7. Looping from step 3 to 6...
+7. Repeat steps 3 to 6...
+
+# Example of using  
+* After second successful authorizing
+![img_1.png](img_1.png)  
+* After three failed attempts
+![img_2.png](img_2.png)  
