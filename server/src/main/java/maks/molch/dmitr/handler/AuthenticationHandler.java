@@ -19,28 +19,19 @@ public class AuthenticationHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(@NonNull ChannelHandlerContext ctx, @NonNull Object msg) {
-        if (!wasAuthorized) countAttempts++;
-        System.out.println("Count Attempts: " + countAttempts);
         RequestData requestData = (RequestData) msg;
-        System.out.println(requestData);
-        boolean success = authenticator.isAuthenticated(requestData);
-        ResponseData responseData = getResponseData(success);
-        ctx.writeAndFlush(responseData);
-        if (success) wasAuthorized = true;
-        if (countAttempts == MAX_ATTEMPTS_COUNT) ctx.channel().close();
-    }
-
-    private ResponseData getResponseData(boolean success) {
         ResponseData responseData;
-        if (wasAuthorized) {
-            responseData = new ResponseData(success, "You was already authorized!", countAttempts);
-        } else {
+        if (!wasAuthorized) {
+            countAttempts++;
+            boolean success = authenticator.isAuthenticated(requestData);
+            if (success) wasAuthorized = true;
             responseData = new ResponseData(
                     success,
                     (success ? "You successfully authorized!" : "Wrong username or password!"),
                     countAttempts
             );
-        }
-        return responseData;
+        } else responseData = new ResponseData(true, "You was already authorized!", countAttempts);
+        ctx.writeAndFlush(responseData);
+        if (countAttempts == MAX_ATTEMPTS_COUNT) ctx.channel().close();
     }
 }
