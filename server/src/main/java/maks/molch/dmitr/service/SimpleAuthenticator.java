@@ -1,7 +1,6 @@
-package maks.molch.dmitr;
+package maks.molch.dmitr.service;
 
 import maks.molch.dmitr.data.RequestData;
-import maks.molch.dmitr.service.Authenticator;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
