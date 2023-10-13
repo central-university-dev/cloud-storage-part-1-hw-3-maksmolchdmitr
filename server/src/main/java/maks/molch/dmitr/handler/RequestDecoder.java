@@ -8,7 +8,7 @@ import maks.molch.dmitr.data.RequestData;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class RequestDecoder extends ReplayingDecoder<RequestDecoder> {
+public class RequestDecoder extends ReplayingDecoder<RequestData> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         String username = readStr(in);
