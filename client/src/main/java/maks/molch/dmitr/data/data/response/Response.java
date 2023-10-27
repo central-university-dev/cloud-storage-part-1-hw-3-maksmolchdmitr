@@ -1,13 +1,15 @@
-package maks.molch.dmitr.data.response;
+package maks.molch.dmitr.data.data.response;
+
+import maks.molch.dmitr.data.response.ResponseStatus;
 
 import java.util.Arrays;
 
 public record Response(
-        ResponseStatus status,
+        maks.molch.dmitr.data.response.ResponseStatus status,
         String[] arguments,
         byte[] payload
 ) {
-    public Response(ResponseStatus status, String[] arguments) {
+    public Response(maks.molch.dmitr.data.response.ResponseStatus status, String[] arguments) {
         this(status, arguments, new byte[0]);
     }
 

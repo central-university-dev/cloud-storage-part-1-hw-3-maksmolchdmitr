@@ -15,13 +15,13 @@ import java.util.Scanner;
 public class CommandLineUserInterface implements UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private final PrintStream printer = System.out;
-    private final FileInteractor fileInteractor;
-    private final CommandHandlerResponsibilityChain commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this);
+    private final CommandHandlerResponsibilityChain commandHandlerResponsibilityChain;
 
     private static final EnumSet<CommandType> allCommandTypes = EnumSet.allOf(CommandType.class);
 
     public CommandLineUserInterface(Path workDirectory) {
-        this.fileInteractor = new FileInteractor(workDirectory);
+        FileInteractor fileInteractor = new FileInteractor(workDirectory);
+        this.commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this, fileInteractor);
     }
 
     @Override

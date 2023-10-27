@@ -2,6 +2,7 @@ package maks.molch.dmitr.handler.request;
 
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
+import maks.molch.dmitr.handler.request.exception.RequestCanNotBeHandledRuntimeException;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class RequestHandlerResponsibilityChain {
         return requestHandlerChain.stream()
                 .filter(requestHandler -> requestHandler.canHandle(request))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Request can not be handled!"))
+                .orElseThrow(RequestCanNotBeHandledRuntimeException::new)
                 .handle(request);
     }
 }

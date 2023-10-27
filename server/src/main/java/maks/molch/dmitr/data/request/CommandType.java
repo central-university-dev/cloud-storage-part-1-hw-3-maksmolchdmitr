@@ -1,5 +1,5 @@
 package maks.molch.dmitr.data.request;
 
 public enum CommandType {
-    AUTHENTICATION
+    AUTHENTICATION, LOAD_FILE
 }

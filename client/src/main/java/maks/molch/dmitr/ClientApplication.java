@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 public class ClientApplication {
     private static final int SERVER_PORT = Integer.parseInt(System.getenv("SERVER_PORT"));
     private static final String SERVER_HOST = System.getenv("SERVER_HOST");
-    private static final Path workDirectory = Paths.get(".");
+    private static final Path workDirectory = Paths.get("ClientDirectory");
     private static final UserInterface userInterface = new CommandLineUserInterface(workDirectory);
 
     public static void main(String[] args) throws InterruptedException {

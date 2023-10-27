@@ -5,6 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
+import maks.molch.dmitr.data.response.Response;
+import maks.molch.dmitr.data.response.ResponseStatus;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -27,5 +29,10 @@ public class RequestDecoder extends ReplayingDecoder<Request> {
     private String readStr(ByteBuf in) {
         int length = in.readInt();
         return in.readCharSequence(length, Charset.defaultCharset()).toString();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        ctx.writeAndFlush(new Response(ResponseStatus.INVALID_REQUEST));
     }
 }

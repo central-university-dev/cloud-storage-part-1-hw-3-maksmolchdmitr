@@ -4,9 +4,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
+import maks.molch.dmitr.handler.request.exception.LimitAttemptAuthenticationRuntimeException;
+import maks.molch.dmitr.handler.request.exception.RequestCanNotBeHandledRuntimeException;
 
 import static maks.molch.dmitr.data.request.CommandType.AUTHENTICATION;
-import static maks.molch.dmitr.data.response.ResponseStatus.ACCESS_DENIED;
+import static maks.molch.dmitr.data.response.ResponseStatus.*;
 
 public class RequestHandlerProcessing extends ChannelInboundHandlerAdapter {
     private final RequestHandlerResponsibilityChain requestHandlerResponsibilityChain = new RequestHandlerResponsibilityChain();
@@ -31,7 +33,13 @@ public class RequestHandlerProcessing extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.writeAndFlush(new Response(ACCESS_DENIED));
-        ctx.close();
+        switch (cause) {
+            case LimitAttemptAuthenticationRuntimeException ignored -> {
+                ctx.writeAndFlush(new Response(ACCESS_DENIED));
+                ctx.close();
+            }
+            case RequestCanNotBeHandledRuntimeException ignored -> ctx.writeAndFlush(new Response(INVALID_REQUEST));
+            default -> ctx.writeAndFlush(new Response(SERVER_ERROR, new String[]{cause.toString()}));
+        }
     }
 }

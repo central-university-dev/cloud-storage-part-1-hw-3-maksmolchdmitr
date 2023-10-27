@@ -3,6 +3,7 @@ package maks.molch.dmitr.handler.request;
 import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
+import maks.molch.dmitr.handler.request.exception.LimitAttemptAuthenticationRuntimeException;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
 
     @Override
     public Response handle(Request request) {
-        if(wasAuthenticated){
+        if (wasAuthenticated) {
             return new Response(ALREADY_AUTHENTICATED);
         }
         String login = request.arguments()[0];
@@ -39,7 +40,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
         if (authenticationSuccess) {
             wasAuthenticated = true;
         } else if (attemptsCount >= MAX_ATTEMPTS_COUNT) {
-            throw new RuntimeException("Max attempts count has been achieved!");
+            throw new LimitAttemptAuthenticationRuntimeException();
         }
         return new Response(authenticationSuccess ? SUCCESS : FAILED);
     }
