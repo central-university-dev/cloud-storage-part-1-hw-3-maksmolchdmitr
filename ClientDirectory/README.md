@@ -1,0 +1,1 @@
+# This is client directory. Directory for downloaded files and some files for loading on server Cloud!
