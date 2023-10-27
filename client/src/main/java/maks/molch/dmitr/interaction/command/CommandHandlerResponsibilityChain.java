@@ -13,7 +13,9 @@ public class CommandHandlerResponsibilityChain {
     public CommandHandlerResponsibilityChain(UserInterface userInterface, Path workDirectory) {
         this.commandHandlers = List.of(
                 new AuthenticationCommandHandler(userInterface),
-                new LoadFileCommandHandler(userInterface, workDirectory)
+                new LoadFileCommandHandler(userInterface, workDirectory),
+                new GetInfoCommandHandler(),
+                new DownloadFileCommandHandler(userInterface)
         );
     }
 

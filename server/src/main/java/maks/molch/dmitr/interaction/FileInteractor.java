@@ -12,4 +12,8 @@ public class FileInteractor {
         }
         Files.write(filePath, bytes);
     }
+
+    public static byte[] getBytesFromFile(Path filePath) throws IOException {
+        return Files.readAllBytes(filePath);
+    }
 }

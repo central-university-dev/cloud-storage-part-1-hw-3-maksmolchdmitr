@@ -12,7 +12,9 @@ public class RequestHandlerResponsibilityChain {
 
     public RequestHandlerResponsibilityChain(Path serverWorkDirectory, AuthenticationRequestHandler authenticationRequestHandler) {
         this.requestHandlerChain = List.of(
-                new LoadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler)
+                new LoadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler),
+                new GetInfoRequestHandler(serverWorkDirectory, authenticationRequestHandler),
+                new DownloadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler)
         );
     }
 
