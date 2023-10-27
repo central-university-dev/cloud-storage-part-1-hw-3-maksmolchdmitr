@@ -6,16 +6,17 @@ import maks.molch.dmitr.interaction.UserInterface;
 import maks.molch.dmitr.interaction.file.FileInteractor;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class LoadFileCommandHandler implements CommandHandler {
     private final UserInterface userInterface;
-    private final FileInteractor fileInteractor;
+    private final Path workDirectory;
 
-    public LoadFileCommandHandler(UserInterface userInterface, FileInteractor fileInteractor) {
+    public LoadFileCommandHandler(UserInterface userInterface, Path workDirectory) {
         this.userInterface = userInterface;
-        this.fileInteractor = fileInteractor;
+        this.workDirectory = workDirectory;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LoadFileCommandHandler implements CommandHandler {
         String clientFilePath = userInterface.getString("Enter client filePath > ");
         Function<String, Optional<byte[]>> tryFilePathToBytes = filePath -> {
             try {
-                return Optional.of(fileInteractor.fileToBytes(filePath));
+                return Optional.of(FileInteractor.fileToBytes(workDirectory.resolve(filePath)));
             } catch (IOException e) {
                 return Optional.empty();
             }

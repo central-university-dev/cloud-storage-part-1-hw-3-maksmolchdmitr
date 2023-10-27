@@ -8,12 +8,15 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import maks.molch.dmitr.handler.request.RequestHandlerProcessing;
 import maks.molch.dmitr.handler.decode.RequestDecoder;
 import maks.molch.dmitr.handler.encode.ResponseEncoder;
+import maks.molch.dmitr.handler.request.RequestHandlerProcessing;
+
+import java.nio.file.Path;
 
 public class ServerApplication {
     private static final int SERVER_PORT = Integer.parseInt(System.getenv("SERVER_PORT"));
+    private static final Path workDirectory = Path.of("ServerDirectory");
 
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -38,7 +41,7 @@ public class ServerApplication {
             @Override
             protected void initChannel(SocketChannel ch) {
                 ch.pipeline()
-                        .addLast(new RequestDecoder(), new ResponseEncoder(), new RequestHandlerProcessing());
+                        .addLast(new RequestDecoder(), new ResponseEncoder(), new RequestHandlerProcessing(workDirectory));
             }
         };
     }

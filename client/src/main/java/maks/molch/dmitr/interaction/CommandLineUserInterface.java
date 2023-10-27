@@ -4,7 +4,6 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.interaction.command.CommandHandlerResponsibilityChain;
-import maks.molch.dmitr.interaction.file.FileInteractor;
 
 import java.io.PrintStream;
 import java.nio.file.Path;
@@ -20,8 +19,7 @@ public class CommandLineUserInterface implements UserInterface {
     private static final EnumSet<CommandType> allCommandTypes = EnumSet.allOf(CommandType.class);
 
     public CommandLineUserInterface(Path workDirectory) {
-        FileInteractor fileInteractor = new FileInteractor(workDirectory);
-        this.commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this, fileInteractor);
+        this.commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this, workDirectory);
     }
 
     @Override

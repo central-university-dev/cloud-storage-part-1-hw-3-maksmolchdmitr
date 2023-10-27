@@ -6,6 +6,7 @@ import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.handler.request.exception.LimitAttemptAuthenticationRuntimeException;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static maks.molch.dmitr.data.response.ResponseStatus.*;
 
@@ -17,6 +18,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
     private static final int MAX_ATTEMPTS_COUNT = 3;
 
     private boolean wasAuthenticated = false;
+    private String username;
     private int attemptsCount = 0;
 
     public boolean clientWasAuthenticated() {
@@ -39,6 +41,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
         attemptsCount++;
         if (authenticationSuccess) {
             wasAuthenticated = true;
+            username = login;
         } else if (attemptsCount >= MAX_ATTEMPTS_COUNT) {
             throw new LimitAttemptAuthenticationRuntimeException();
         }
@@ -48,5 +51,9 @@ public class AuthenticationRequestHandler implements RequestHandler {
     private boolean authSuccess(String login, String password) {
         if (!loginToPasswords.containsKey(login)) return false;
         return loginToPasswords.get(login).equals(password);
+    }
+
+    public String getUsername() {
+        return Objects.requireNonNull(username);
     }
 }

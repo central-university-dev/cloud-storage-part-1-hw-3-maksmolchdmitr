@@ -7,6 +7,10 @@ public record Response(
         String[] arguments,
         byte[] payload
 ) {
+    public Response(ResponseStatus status, String[] arguments) {
+        this(status, arguments, new byte[0]);
+    }
+
     public Response(ResponseStatus status) {
         this(status, new String[0], new byte[0]);
     }

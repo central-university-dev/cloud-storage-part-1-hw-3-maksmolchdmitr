@@ -7,12 +7,18 @@ import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.handler.request.exception.LimitAttemptAuthenticationRuntimeException;
 import maks.molch.dmitr.handler.request.exception.RequestCanNotBeHandledRuntimeException;
 
+import java.nio.file.Path;
+
 import static maks.molch.dmitr.data.request.CommandType.AUTHENTICATION;
 import static maks.molch.dmitr.data.response.ResponseStatus.*;
 
 public class RequestHandlerProcessing extends ChannelInboundHandlerAdapter {
-    private final RequestHandlerResponsibilityChain requestHandlerResponsibilityChain = new RequestHandlerResponsibilityChain();
+    private final RequestHandlerResponsibilityChain requestHandlerResponsibilityChain;
     private final AuthenticationRequestHandler authenticationRequestHandler = new AuthenticationRequestHandler();
+
+    public RequestHandlerProcessing(Path serverWorkDirectory) {
+        this.requestHandlerResponsibilityChain = new RequestHandlerResponsibilityChain(serverWorkDirectory, authenticationRequestHandler);
+    }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
