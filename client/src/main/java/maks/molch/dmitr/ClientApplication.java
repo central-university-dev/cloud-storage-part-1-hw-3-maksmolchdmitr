@@ -14,15 +14,34 @@ import maks.molch.dmitr.interaction.UserInterface;
 
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ClientApplication {
-    private static final int SERVER_PORT = Integer.parseInt(System.getenv("SERVER_PORT"));
-    private static final String SERVER_HOST = System.getenv("SERVER_HOST");
-    private static final Path workDirectory = Paths.get("ClientDirectory");
-    private static final UserInterface userInterface = new CommandLineUserInterface(workDirectory);
+    private final int SERVER_PORT;
+    private final String SERVER_HOST;
+    private final UserInterface userInterface;
 
     public static void main(String[] args) throws InterruptedException {
+        checkArgs(args);
+        String serverHost = args[0];
+        int serverPort = Integer.parseInt(args[1]);
+        Path workDirectory = Path.of(args[2]);
+        ClientApplication clientApplication = new ClientApplication(serverPort, serverHost, workDirectory);
+        clientApplication.run();
+    }
+
+    public ClientApplication(int serverPort, String serverHost, Path workDirectory) {
+        this.userInterface = new CommandLineUserInterface(workDirectory);
+        SERVER_HOST = serverHost;
+        SERVER_PORT = serverPort;
+    }
+
+    private static void checkArgs(String[] args) {
+        if (args.length == 3) return;
+        System.err.println("Usage: java Main <serverHost> <serverPort> <workDirectory>");
+        System.exit(-1);
+    }
+
+    private void run() throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -39,16 +58,7 @@ public class ClientApplication {
         }
     }
 
-    private static void interactWithUser(Channel channel) {
-        userInterface.show("Введите 'exit' для выхода");
-        do {
-            Request request = userInterface.getRequest();
-            channel.writeAndFlush(request);
-        } while (!userInterface.wasClosed() && channel.isActive());
-        channel.close();
-    }
-
-    private static ChannelHandler getChannelInitializer() {
+    private ChannelHandler getChannelInitializer() {
         return new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel ch) {
@@ -56,5 +66,14 @@ public class ClientApplication {
                         .addLast(new RequestEncoder(userInterface), new ResponseDecoder(userInterface), new ResponseHandlerProcessing(userInterface));
             }
         };
+    }
+
+    private void interactWithUser(Channel channel) {
+        userInterface.show("Введите 'exit' для выхода");
+        do {
+            Request request = userInterface.getRequest();
+            channel.writeAndFlush(request);
+        } while (!userInterface.wasClosed() && channel.isActive());
+        channel.close();
     }
 }

@@ -15,10 +15,29 @@ import maks.molch.dmitr.handler.request.RequestHandlerProcessing;
 import java.nio.file.Path;
 
 public class ServerApplication {
-    private static final int SERVER_PORT = Integer.parseInt(System.getenv("SERVER_PORT"));
-    private static final Path workDirectory = Path.of("ServerDirectory");
+    private final int SERVER_PORT;
+    private final Path workDirectory;
+
+    public ServerApplication(int serverPort, Path workDirectory) {
+        SERVER_PORT = serverPort;
+        this.workDirectory = workDirectory;
+    }
 
     public static void main(String[] args) throws InterruptedException {
+        checkArgs(args);
+        int serverPort = Integer.parseInt(args[0]);
+        Path workDirectory = Path.of(args[1]);
+        ServerApplication serverApplication = new ServerApplication(serverPort, workDirectory);
+        serverApplication.run();
+    }
+
+    private static void checkArgs(String[] args) {
+        if (args.length == 2) return;
+        System.err.println("Usage: java Main <serverPort> <workDirectory>");
+        System.exit(-1);
+    }
+
+    public void run() throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -36,7 +55,7 @@ public class ServerApplication {
         }
     }
 
-    private static ChannelInitializer<SocketChannel> getChannelInitializer() {
+    private ChannelInitializer<SocketChannel> getChannelInitializer() {
         return new ChannelInitializer<>() {
             @Override
             protected void initChannel(SocketChannel ch) {
