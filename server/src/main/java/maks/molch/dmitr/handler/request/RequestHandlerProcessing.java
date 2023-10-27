@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
+import maks.molch.dmitr.handler.request.exception.FileNotFoundRuntimeException;
 import maks.molch.dmitr.handler.request.exception.LimitAttemptAuthenticationRuntimeException;
 import maks.molch.dmitr.handler.request.exception.RequestCanNotBeHandledRuntimeException;
 
@@ -45,6 +46,7 @@ public class RequestHandlerProcessing extends ChannelInboundHandlerAdapter {
                 ctx.close();
             }
             case RequestCanNotBeHandledRuntimeException ignored -> ctx.writeAndFlush(new Response(INVALID_REQUEST));
+            case FileNotFoundRuntimeException ignored -> ctx.writeAndFlush(new Response(FILE_NOT_FOUND));
             default -> ctx.writeAndFlush(new Response(SERVER_ERROR, new String[]{cause.toString()}));
         }
     }

@@ -4,6 +4,7 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.interaction.command.CommandHandlerResponsibilityChain;
+import maks.molch.dmitr.interaction.response.ResponseHandlerResponsibilityChain;
 
 import java.io.PrintStream;
 import java.nio.file.Path;
@@ -15,11 +16,13 @@ public class CommandLineUserInterface implements UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private final PrintStream printer = System.out;
     private final CommandHandlerResponsibilityChain commandHandlerResponsibilityChain;
+    private final ResponseHandlerResponsibilityChain responseHandlerResponsibilityChain;
 
     private static final EnumSet<CommandType> allCommandTypes = EnumSet.allOf(CommandType.class);
 
     public CommandLineUserInterface(Path workDirectory) {
         this.commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this, workDirectory);
+        responseHandlerResponsibilityChain = new ResponseHandlerResponsibilityChain(this, workDirectory);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class CommandLineUserInterface implements UserInterface {
 
     @Override
     public void show(Response response) {
-        printer.println("Response from server: " + response);
+        responseHandlerResponsibilityChain.handle(response);
     }
 
     private CommandType readCommandType() {
