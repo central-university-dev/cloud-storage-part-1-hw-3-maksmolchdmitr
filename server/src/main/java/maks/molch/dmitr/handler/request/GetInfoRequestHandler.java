@@ -4,10 +4,12 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
+import maks.molch.dmitr.interaction.file.FileInteractor;
+import maks.molch.dmitr.interaction.file.FileObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public class GetInfoRequestHandler implements RequestHandler {
     private final Path workDirectory;
@@ -25,34 +27,17 @@ public class GetInfoRequestHandler implements RequestHandler {
 
     @Override
     public Response handle(Request request) {
-        StringBuilder info = new StringBuilder();
         File workDirectoryFile = workDirectory.resolve(authenticationRequestHandler.getUsername()).toFile();
-        getDirectoryTree(workDirectoryFile, info);
-        String infoMessage = info.isEmpty() ? "Empty directory" : info.toString();
-        return new Response(ResponseStatus.INFO, new String[]{infoMessage});
+        FileObject fileObject = FileInteractor.getFileObject(workDirectoryFile);
+        byte[] payloadBytes = getPayloadBytes(fileObject);
+        return new Response(ResponseStatus.INFO, new String[]{}, payloadBytes);
     }
 
-    private void getDirectoryTree(File workDirectoryFile, StringBuilder info) {
-        getDownFileObjects(0, workDirectoryFile, info);
-    }
-
-    private void getDirectoryTree(int depth, File directoryFile, StringBuilder res) {
-        getDirectoryFile(depth, directoryFile, res);
-        getDownFileObjects(depth, directoryFile, res);
-    }
-
-    private void getDownFileObjects(int depth, File directoryFile, StringBuilder res) {
-        File[] directoryFiles = Objects.requireNonNullElse(directoryFile.listFiles(), new File[]{});
-        for (File file : directoryFiles) {
-            getDirectoryTree(depth + 1, file, res);
+    private static byte[] getPayloadBytes(FileObject fileObject) {
+        try {
+            return fileObject.toBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    private void getDirectoryFile(int depth, File directoryFile, StringBuilder res) {
-        res
-                .append("--".repeat(depth))
-                .append(directoryFile.isFile() ? "File: " : "Directory: ")
-                .append(directoryFile.getName())
-                .append("\n");
     }
 }

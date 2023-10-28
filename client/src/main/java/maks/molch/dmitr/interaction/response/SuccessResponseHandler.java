@@ -18,6 +18,6 @@ public class SuccessResponseHandler implements ResponseHandler {
 
     @Override
     public void handle(Response response) {
-        userInterface.show("You was successfully authenticated!");
+        userInterface.show("Your command was successfully completed!");
     }
 }

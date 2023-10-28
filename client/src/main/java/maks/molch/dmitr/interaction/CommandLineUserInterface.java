@@ -4,6 +4,7 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.interaction.command.CommandHandlerResponsibilityChain;
+import maks.molch.dmitr.interaction.file.FileObject;
 import maks.molch.dmitr.interaction.response.ResponseHandlerResponsibilityChain;
 
 import java.io.PrintStream;
@@ -55,6 +56,14 @@ public class CommandLineUserInterface implements UserInterface {
     @Override
     public void show(Response response) {
         responseHandlerResponsibilityChain.handle(response);
+    }
+
+    @Override
+    public void show(FileObject fileObject) {
+        printer.println("Server Files Directory Tree:");
+        printer.println("----------------------------");
+        printer.println(fileObject.toString());
+        printer.println("----------------------------");
     }
 
     private CommandType readCommandType() {
