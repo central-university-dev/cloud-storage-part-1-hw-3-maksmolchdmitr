@@ -15,7 +15,9 @@ public class CommandHandlerResponsibilityChain {
                 new AuthenticationCommandHandler(userInterface),
                 new LoadFileCommandHandler(userInterface, workDirectory),
                 new GetInfoCommandHandler(),
-                new DownloadFileCommandHandler(userInterface)
+                new DownloadFileCommandHandler(userInterface),
+                new MoveCommandHandler(userInterface),
+                new CopyCommandHandler(userInterface)
         );
     }
 

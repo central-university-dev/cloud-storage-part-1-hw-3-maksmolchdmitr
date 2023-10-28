@@ -14,7 +14,8 @@ public class RequestHandlerResponsibilityChain {
         this.requestHandlerChain = List.of(
                 new LoadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler),
                 new GetInfoRequestHandler(serverWorkDirectory, authenticationRequestHandler),
-                new DownloadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler)
+                new DownloadFileRequestHandler(serverWorkDirectory, authenticationRequestHandler),
+                new CopyAndMoveRequestHandler(serverWorkDirectory, authenticationRequestHandler)
         );
     }
 
