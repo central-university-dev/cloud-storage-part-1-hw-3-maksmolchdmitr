@@ -37,7 +37,7 @@ public class DownloadFileRequestHandler implements RequestHandler {
 
     private static byte[] getBytesFromFile(Path absoluteFilePath) {
         try {
-            return FileInteractor.getBytesFromFile(absoluteFilePath);
+            return FileInteractor.getBytes(absoluteFilePath);
         } catch (IOException e) {
             throw new FileNotFoundRuntimeException();
         }

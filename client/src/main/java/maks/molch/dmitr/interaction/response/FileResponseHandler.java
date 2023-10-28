@@ -28,7 +28,7 @@ public class FileResponseHandler implements ResponseHandler {
     public void handle(Response response) {
         try {
             String fileName = response.arguments()[0];
-            FileInteractor.createFileFromBytes(workDirectory.resolve(fileName), response.payload());
+            FileInteractor.createFile(workDirectory.resolve(fileName), response.payload());
             userInterface.show("Server send you file: " + fileName);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -29,7 +29,7 @@ public class LoadFileRequestHandler implements RequestHandler {
     public Response handle(Request request) {
         try {
             Path absoluteFilePath = getAbsoluteFilePath(request);
-            FileInteractor.createFileFromBytes(absoluteFilePath, request.payload());
+            FileInteractor.createFile(absoluteFilePath, request.payload());
             return new Response(ResponseStatus.SUCCESS);
         } catch (IOException e) {
             throw new RuntimeException(e);

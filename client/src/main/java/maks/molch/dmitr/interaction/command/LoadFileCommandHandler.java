@@ -36,7 +36,7 @@ public class LoadFileCommandHandler implements CommandHandler {
         String clientFilePath = userInterface.getString("Enter client filePath > ");
         Function<String, Optional<byte[]>> tryFilePathToBytes = filePath -> {
             try {
-                return Optional.of(FileInteractor.getBytesFromFile(workDirectory.resolve(filePath)));
+                return Optional.of(FileInteractor.getBytes(workDirectory.resolve(filePath)));
             } catch (IOException e) {
                 return Optional.empty();
             }
