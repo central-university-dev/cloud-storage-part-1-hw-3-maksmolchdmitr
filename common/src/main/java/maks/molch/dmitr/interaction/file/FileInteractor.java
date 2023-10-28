@@ -1,4 +1,4 @@
-package maks.molch.dmitr.interaction;
+package maks.molch.dmitr.interaction.file;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,2 +1,4 @@
 rootProject.name = 'Netty'
 include 'client', 'server'
+include 'common'
+

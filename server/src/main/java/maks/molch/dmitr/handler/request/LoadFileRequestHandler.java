@@ -4,7 +4,7 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
-import maks.molch.dmitr.interaction.FileInteractor;
+import maks.molch.dmitr.interaction.file.FileInteractor;
 
 import java.io.IOException;
 import java.nio.file.Path;

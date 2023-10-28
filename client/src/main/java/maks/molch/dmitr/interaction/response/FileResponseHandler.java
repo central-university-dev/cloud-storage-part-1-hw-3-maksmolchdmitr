@@ -2,8 +2,8 @@ package maks.molch.dmitr.interaction.response;
 
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
-import maks.molch.dmitr.interaction.UserInterface;
 import maks.molch.dmitr.interaction.file.FileInteractor;
+import maks.molch.dmitr.interaction.UserInterface;
 
 import java.io.IOException;
 import java.nio.file.Path;

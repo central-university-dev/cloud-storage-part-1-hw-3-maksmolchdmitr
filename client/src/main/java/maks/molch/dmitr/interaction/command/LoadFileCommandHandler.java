@@ -2,8 +2,8 @@ package maks.molch.dmitr.interaction.command;
 
 import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
-import maks.molch.dmitr.interaction.UserInterface;
 import maks.molch.dmitr.interaction.file.FileInteractor;
+import maks.molch.dmitr.interaction.UserInterface;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,7 +36,7 @@ public class LoadFileCommandHandler implements CommandHandler {
         String clientFilePath = userInterface.getString("Enter client filePath > ");
         Function<String, Optional<byte[]>> tryFilePathToBytes = filePath -> {
             try {
-                return Optional.of(FileInteractor.fileToBytes(workDirectory.resolve(filePath)));
+                return Optional.of(FileInteractor.getBytesFromFile(workDirectory.resolve(filePath)));
             } catch (IOException e) {
                 return Optional.empty();
             }
