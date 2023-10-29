@@ -1,5 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+application {
+    mainClassName = 'maks.molch.dmitr.ServerApplication'
 }
 
 group = 'maks.molch.dmitr'
@@ -19,5 +24,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21

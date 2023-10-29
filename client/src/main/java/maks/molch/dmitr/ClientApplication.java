@@ -14,31 +14,25 @@ import maks.molch.dmitr.interaction.UserInterface;
 
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class ClientApplication {
-    private final int SERVER_PORT;
-    private final String SERVER_HOST;
+    private final int serverPort;
+    private final String serverHost;
     private final UserInterface userInterface;
 
     public static void main(String[] args) throws InterruptedException {
-        checkArgs(args);
-        String serverHost = args[0];
-        int serverPort = Integer.parseInt(args[1]);
-        Path workDirectory = Path.of(args[2]);
+        String serverHost = Objects.requireNonNull(System.getenv("SERVER_HOST"));
+        int serverPort = Integer.parseInt(Objects.requireNonNull(System.getenv("SERVER_PORT")));
+        Path workDirectory = Path.of(Objects.requireNonNull(System.getenv("CLIENT_WORK_DIRECTORY")));
         ClientApplication clientApplication = new ClientApplication(serverPort, serverHost, workDirectory);
         clientApplication.run();
     }
 
     public ClientApplication(int serverPort, String serverHost, Path workDirectory) {
         this.userInterface = new CommandLineUserInterface(workDirectory);
-        SERVER_HOST = serverHost;
-        SERVER_PORT = serverPort;
-    }
-
-    private static void checkArgs(String[] args) {
-        if (args.length == 3) return;
-        System.err.println("Usage: java Main <serverHost> <serverPort> <workDirectory>");
-        System.exit(-1);
+        this.serverHost = serverHost;
+        this.serverPort = serverPort;
     }
 
     private void run() throws InterruptedException {
@@ -47,7 +41,7 @@ public class ClientApplication {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
-                    .remoteAddress(new InetSocketAddress(SERVER_HOST, SERVER_PORT))
+                    .remoteAddress(new InetSocketAddress(serverHost, serverPort))
                     .handler(getChannelInitializer());
             ChannelFuture future = bootstrap.connect().sync();
             Channel channel = future.channel();

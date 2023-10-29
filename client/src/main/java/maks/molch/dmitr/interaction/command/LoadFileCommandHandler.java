@@ -38,12 +38,13 @@ public class LoadFileCommandHandler implements CommandHandler {
             try {
                 return Optional.of(FileInteractor.getBytes(workDirectory.resolve(filePath)));
             } catch (IOException e) {
+                userInterface.show(e.toString());
                 return Optional.empty();
             }
         };
         Optional<byte[]> payloadBytes = tryFilePathToBytes.apply(clientFilePath);
         while (payloadBytes.isEmpty()) {
-            userInterface.show("File with path " + clientFilePath + " doesn't exist!");
+            userInterface.show("File with path '" + clientFilePath + "' doesn't exist!");
             clientFilePath = userInterface.getString("Enter client filePath > ");
             payloadBytes = tryFilePathToBytes.apply(clientFilePath);
         }

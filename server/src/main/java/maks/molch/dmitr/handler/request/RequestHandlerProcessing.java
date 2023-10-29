@@ -40,14 +40,15 @@ public class RequestHandlerProcessing extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        switch (cause) {
-            case LimitAttemptAuthenticationRuntimeException ignored -> {
-                ctx.writeAndFlush(new Response(ACCESS_DENIED));
-                ctx.close();
-            }
-            case RequestCanNotBeHandledRuntimeException ignored -> ctx.writeAndFlush(new Response(INVALID_REQUEST));
-            case FileNotFoundRuntimeException ignored -> ctx.writeAndFlush(new Response(FILE_NOT_FOUND));
-            default -> ctx.writeAndFlush(new Response(SERVER_ERROR, new String[]{cause.toString()}));
+        if (cause instanceof LimitAttemptAuthenticationRuntimeException) {
+            ctx.writeAndFlush(new Response(ACCESS_DENIED));
+            ctx.close();
+        } else if (cause instanceof RequestCanNotBeHandledRuntimeException) {
+            ctx.writeAndFlush(new Response(INVALID_REQUEST));
+        } else if (cause instanceof FileNotFoundRuntimeException) {
+            ctx.writeAndFlush(new Response(FILE_NOT_FOUND));
+        } else {
+            ctx.writeAndFlush(new Response(SERVER_ERROR, new String[]{cause.toString()}));
         }
     }
 }

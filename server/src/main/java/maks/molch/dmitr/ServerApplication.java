@@ -13,6 +13,7 @@ import maks.molch.dmitr.handler.encode.ResponseEncoder;
 import maks.molch.dmitr.handler.request.RequestHandlerProcessing;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class ServerApplication {
     private final int SERVER_PORT;
@@ -24,17 +25,10 @@ public class ServerApplication {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        checkArgs(args);
-        int serverPort = Integer.parseInt(args[0]);
-        Path workDirectory = Path.of(args[1]);
+        int serverPort = Integer.parseInt(Objects.requireNonNull(System.getenv("SERVER_PORT")));
+        Path workDirectory = Path.of(Objects.requireNonNull(System.getenv("SERVER_WORK_DIRECTORY")));
         ServerApplication serverApplication = new ServerApplication(serverPort, workDirectory);
         serverApplication.run();
-    }
-
-    private static void checkArgs(String[] args) {
-        if (args.length == 2) return;
-        System.err.println("Usage: java Main <serverPort> <workDirectory>");
-        System.exit(-1);
     }
 
     public void run() throws InterruptedException {

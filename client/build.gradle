@@ -1,5 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+application {
+    mainClassName = 'maks.molch.dmitr.ClientApplication'
+}
+
+run {
+    standardInput = System.in
 }
 
 group = 'maks.molch.dmitr'
