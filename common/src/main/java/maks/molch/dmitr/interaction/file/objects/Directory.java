@@ -1,8 +1,11 @@
-package maks.molch.dmitr.interaction.file;
+package maks.molch.dmitr.interaction.file.objects;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Some directory in files hierarchy that also has some FileObjects (SimpleFile or Directory)
+ */
 public final class Directory extends FileObject {
     private final List<FileObject> fileObjects = new ArrayList<>();
 

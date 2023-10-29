@@ -1,8 +1,11 @@
-package maks.molch.dmitr.interaction.file;
+package maks.molch.dmitr.interaction.file.objects;
 
 import java.io.*;
 
-public sealed class FileObject implements Serializable permits Directory, SimpleFile {
+/**
+ * Some abstract sealed class that permits Directory and SimpleFile for sending and handling files hierarchy
+ */
+public sealed abstract class FileObject implements Serializable permits Directory, SimpleFile {
     private static final byte DIRECTORY_BYTE = 0;
     private static final byte FILE_BYTE = 1;
 

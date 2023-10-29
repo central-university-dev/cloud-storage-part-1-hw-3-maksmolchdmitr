@@ -1,5 +1,9 @@
 package maks.molch.dmitr.interaction.file;
 
+import maks.molch.dmitr.interaction.file.objects.Directory;
+import maks.molch.dmitr.interaction.file.objects.FileObject;
+import maks.molch.dmitr.interaction.file.objects.SimpleFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

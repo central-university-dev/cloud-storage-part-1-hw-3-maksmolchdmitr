@@ -1,5 +1,6 @@
 package maks.molch.dmitr.interaction.file;
 
+import maks.molch.dmitr.interaction.file.objects.FileObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

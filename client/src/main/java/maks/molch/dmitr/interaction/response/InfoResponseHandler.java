@@ -3,7 +3,7 @@ package maks.molch.dmitr.interaction.response;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
 import maks.molch.dmitr.interaction.UserInterface;
-import maks.molch.dmitr.interaction.file.FileObject;
+import maks.molch.dmitr.interaction.file.objects.FileObject;
 
 import java.io.IOException;
 

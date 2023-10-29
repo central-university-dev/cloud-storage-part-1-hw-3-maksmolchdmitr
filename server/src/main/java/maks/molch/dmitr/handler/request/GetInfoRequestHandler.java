@@ -5,7 +5,7 @@ import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
 import maks.molch.dmitr.interaction.file.FileInteractor;
-import maks.molch.dmitr.interaction.file.FileObject;
+import maks.molch.dmitr.interaction.file.objects.FileObject;
 
 import java.io.File;
 import java.io.IOException;

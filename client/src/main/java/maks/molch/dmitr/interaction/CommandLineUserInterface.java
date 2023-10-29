@@ -4,7 +4,7 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.interaction.command.CommandHandlerResponsibilityChain;
-import maks.molch.dmitr.interaction.file.FileObject;
+import maks.molch.dmitr.interaction.file.objects.FileObject;
 import maks.molch.dmitr.interaction.response.ResponseHandlerResponsibilityChain;
 
 import java.io.PrintStream;
