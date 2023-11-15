@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class CopyAndMoveRequestHandler implements RequestHandler {
+    private static final int COMMAND_ARGUMENTS_COUNT = 4;
     private final Path serverWorkDirectory;
     private final AuthenticationRequestHandler authenticationRequestHandler;
 
@@ -22,7 +23,7 @@ public class CopyAndMoveRequestHandler implements RequestHandler {
     @Override
     public boolean canHandle(Request request) {
         return (request.commandType() == CommandType.MOVE || request.commandType() == CommandType.COPY) &&
-               request.arguments().length == 4;
+               request.arguments().length == COMMAND_ARGUMENTS_COUNT;
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.Objects;
 import static maks.molch.dmitr.data.response.ResponseStatus.*;
 
 public class AuthenticationRequestHandler implements RequestHandler {
+    private static final int COMMAND_ARGUMENTS_COUNT = 2;
     private static final Map<String, String> loginToPasswords = Map.of(
             "Maks", "1234",
             "Alice", "pass"
@@ -27,7 +28,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(Request request) {
-        return request.commandType() == CommandType.AUTHENTICATION && request.arguments().length == 2;
+        return request.commandType() == CommandType.AUTHENTICATION && request.arguments().length == COMMAND_ARGUMENTS_COUNT;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
         }
         String login = request.arguments()[0];
         String password = request.arguments()[1];
-        boolean authenticationSuccess = authSuccess(login, password);
+        boolean authenticationSuccess = isAuthSuccess(login, password);
         attemptsCount++;
         if (authenticationSuccess) {
             wasAuthenticated = true;
@@ -48,7 +49,7 @@ public class AuthenticationRequestHandler implements RequestHandler {
         return new Response(authenticationSuccess ? SUCCESS : FAILED);
     }
 
-    private boolean authSuccess(String login, String password) {
+    private boolean isAuthSuccess(String login, String password) {
         if (!loginToPasswords.containsKey(login)) return false;
         return loginToPasswords.get(login).equals(password);
     }

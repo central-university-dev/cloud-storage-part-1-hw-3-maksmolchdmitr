@@ -3,9 +3,9 @@ package maks.molch.dmitr.interaction;
 import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.data.response.Response;
-import maks.molch.dmitr.interaction.command.CommandHandlerResponsibilityChain;
+import maks.molch.dmitr.interaction.command.CommandInteractorResponsibilityChain;
 import maks.molch.dmitr.interaction.file.objects.FileObject;
-import maks.molch.dmitr.interaction.response.ResponseHandlerResponsibilityChain;
+import maks.molch.dmitr.interaction.response.ResponseInteractorResponsibilityChain;
 
 import java.io.PrintStream;
 import java.nio.file.Path;
@@ -16,20 +16,20 @@ import java.util.Scanner;
 public class CommandLineUserInterface implements UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private final PrintStream printer = System.out;
-    private final CommandHandlerResponsibilityChain commandHandlerResponsibilityChain;
-    private final ResponseHandlerResponsibilityChain responseHandlerResponsibilityChain;
+    private final CommandInteractorResponsibilityChain commandInteractorResponsibilityChain;
+    private final ResponseInteractorResponsibilityChain responseInteractorResponsibilityChain;
 
     private static final EnumSet<CommandType> allCommandTypes = EnumSet.allOf(CommandType.class);
 
     public CommandLineUserInterface(Path workDirectory) {
-        this.commandHandlerResponsibilityChain = new CommandHandlerResponsibilityChain(this, workDirectory);
-        responseHandlerResponsibilityChain = new ResponseHandlerResponsibilityChain(this, workDirectory);
+        this.commandInteractorResponsibilityChain = new CommandInteractorResponsibilityChain(this, workDirectory);
+        this.responseInteractorResponsibilityChain = new ResponseInteractorResponsibilityChain(this, workDirectory);
     }
 
     @Override
     public Request getRequest() {
         CommandType commandType = readCommandType();
-        return commandHandlerResponsibilityChain.handle(commandType);
+        return commandInteractorResponsibilityChain.handle(commandType);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CommandLineUserInterface implements UserInterface {
 
     @Override
     public void show(Response response) {
-        responseHandlerResponsibilityChain.handle(response);
+        responseInteractorResponsibilityChain.handle(response);
     }
 
     @Override

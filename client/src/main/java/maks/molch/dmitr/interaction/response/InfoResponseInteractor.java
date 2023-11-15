@@ -7,10 +7,10 @@ import maks.molch.dmitr.interaction.file.objects.FileObject;
 
 import java.io.IOException;
 
-public class InfoResponseHandler implements ResponseHandler {
+public class InfoResponseInteractor implements ResponseInteractor {
     private final UserInterface userInterface;
 
-    public InfoResponseHandler(UserInterface userInterface) {
+    public InfoResponseInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 

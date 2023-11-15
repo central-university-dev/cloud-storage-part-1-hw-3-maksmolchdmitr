@@ -10,11 +10,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class LoadFileCommandHandler implements CommandHandler {
+public class LoadFileCommandInteractor implements CommandInteractor {
     private final UserInterface userInterface;
     private final Path workDirectory;
 
-    public LoadFileCommandHandler(UserInterface userInterface, Path workDirectory) {
+    public LoadFileCommandInteractor(UserInterface userInterface, Path workDirectory) {
         this.userInterface = userInterface;
         this.workDirectory = workDirectory;
     }

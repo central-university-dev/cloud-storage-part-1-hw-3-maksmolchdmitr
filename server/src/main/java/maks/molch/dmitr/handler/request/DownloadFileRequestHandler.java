@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class DownloadFileRequestHandler implements RequestHandler {
+    private static final int COMMAND_ARGUMENTS_COUNT = 2;
+
     private final Path serverWorkDirectory;
     private final AuthenticationRequestHandler authenticationRequestHandler;
 
@@ -22,7 +24,7 @@ public class DownloadFileRequestHandler implements RequestHandler {
     @Override
     public boolean canHandle(Request request) {
         return (request.commandType() == CommandType.DOWNLOAD_FILE) &&
-               (request.arguments().length == 2);
+               (request.arguments().length == COMMAND_ARGUMENTS_COUNT);
     }
 
     @Override

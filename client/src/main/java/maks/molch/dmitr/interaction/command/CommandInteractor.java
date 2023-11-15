@@ -6,7 +6,7 @@ import maks.molch.dmitr.data.request.Request;
 /**
  * An interface that handle some CommandType and returns the request
  */
-public interface CommandHandler {
+public interface CommandInteractor {
     /**
      * Answers the question: Can the given CommandType be processed?
      *

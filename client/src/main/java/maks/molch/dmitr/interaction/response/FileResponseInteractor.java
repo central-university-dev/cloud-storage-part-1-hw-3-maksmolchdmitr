@@ -8,11 +8,11 @@ import maks.molch.dmitr.interaction.UserInterface;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class FileResponseHandler implements ResponseHandler {
+public class FileResponseInteractor implements ResponseInteractor {
     private final UserInterface userInterface;
     private final Path workDirectory;
 
-    public FileResponseHandler(UserInterface userInterface, Path workDirectory) {
+    public FileResponseInteractor(UserInterface userInterface, Path workDirectory) {
         this.userInterface = userInterface;
         this.workDirectory = workDirectory;
     }

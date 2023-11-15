@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class LoadFileRequestHandler implements RequestHandler {
+    private static final int COMMAND_ARGUMENTS_COUNT = 2;
+
     private final Path serverWorkDirectory;
     private final AuthenticationRequestHandler authenticationRequestHandler;
 
@@ -21,7 +23,7 @@ public class LoadFileRequestHandler implements RequestHandler {
     @Override
     public boolean canHandle(Request request) {
         return (request.commandType() == CommandType.LOAD_FILE) &&
-               (request.arguments().length == 2) &&
+               (request.arguments().length == COMMAND_ARGUMENTS_COUNT) &&
                (request.payload().length > 0);
     }
 

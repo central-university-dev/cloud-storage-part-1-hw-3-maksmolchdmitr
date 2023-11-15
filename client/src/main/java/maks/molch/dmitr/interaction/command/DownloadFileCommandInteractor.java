@@ -4,10 +4,10 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.interaction.UserInterface;
 
-public class DownloadFileCommandHandler implements CommandHandler {
+public class DownloadFileCommandInteractor implements CommandInteractor {
     private final UserInterface userInterface;
 
-    public DownloadFileCommandHandler(UserInterface userInterface) {
+    public DownloadFileCommandInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 

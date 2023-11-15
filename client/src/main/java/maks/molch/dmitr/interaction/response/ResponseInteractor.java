@@ -5,7 +5,7 @@ import maks.molch.dmitr.data.response.Response;
 /**
  * An interface that handles Response from server
  */
-public interface ResponseHandler {
+public interface ResponseInteractor {
     /**
      * Answers the question: Can the Response be processed?
      *

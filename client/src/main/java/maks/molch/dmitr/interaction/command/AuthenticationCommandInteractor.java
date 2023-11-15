@@ -4,10 +4,10 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.interaction.UserInterface;
 
-public class AuthenticationCommandHandler implements CommandHandler {
+public class AuthenticationCommandInteractor implements CommandInteractor {
     private final UserInterface userInterface;
 
-    public AuthenticationCommandHandler(UserInterface userInterface) {
+    public AuthenticationCommandInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 

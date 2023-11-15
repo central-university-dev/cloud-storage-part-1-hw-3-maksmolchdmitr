@@ -6,25 +6,25 @@ import maks.molch.dmitr.interaction.UserInterface;
 import java.nio.file.Path;
 import java.util.List;
 
-public class ResponseHandlerResponsibilityChain {
-    private final List<ResponseHandler> responseHandlersChain;
+public class ResponseInteractorResponsibilityChain {
+    private final List<ResponseInteractor> responseHandlersChain;
 
-    public ResponseHandlerResponsibilityChain(UserInterface userInterface, Path workDirectory) {
+    public ResponseInteractorResponsibilityChain(UserInterface userInterface, Path workDirectory) {
         this.responseHandlersChain = List.of(
-                new SuccessResponseHandler(userInterface),
-                new FailedResponseHandler(userInterface),
-                new AccessDeniedResponseHandler(userInterface),
-                new AlreadyAuthenticatedResponseHandler(userInterface),
-                new ServerErrorResponseHandler(userInterface),
-                new InfoResponseHandler(userInterface),
-                new FileResponseHandler(userInterface, workDirectory),
-                new FilNotFoundResponseHandler(userInterface),
+                new SuccessResponseInteractor(userInterface),
+                new FailedResponseInteractor(userInterface),
+                new AccessDeniedResponseInteractor(userInterface),
+                new AlreadyAuthenticatedResponseInteractor(userInterface),
+                new ServerErrorResponseInteractor(userInterface),
+                new InfoResponseInteractor(userInterface),
+                new FileResponseInteractor(userInterface, workDirectory),
+                new FilNotFoundResponseInteractor(userInterface),
                 getDefaultResponseHandler(userInterface)
         );
     }
 
-    private static ResponseHandler getDefaultResponseHandler(UserInterface userInterface) {
-        return new ResponseHandler() {
+    private static ResponseInteractor getDefaultResponseHandler(UserInterface userInterface) {
+        return new ResponseInteractor() {
             @Override
             public boolean canHandle(Response response) {
                 return true;

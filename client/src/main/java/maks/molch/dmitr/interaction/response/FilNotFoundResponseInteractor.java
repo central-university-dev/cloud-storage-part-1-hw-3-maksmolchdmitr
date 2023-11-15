@@ -4,20 +4,20 @@ import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
 import maks.molch.dmitr.interaction.UserInterface;
 
-public class ServerErrorResponseHandler implements ResponseHandler {
+public class FilNotFoundResponseInteractor implements ResponseInteractor {
     private final UserInterface userInterface;
 
-    public ServerErrorResponseHandler(UserInterface userInterface) {
+    public FilNotFoundResponseInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 
     @Override
     public boolean canHandle(Response response) {
-        return response.status() == ResponseStatus.SERVER_ERROR;
+        return response.status() == ResponseStatus.FILE_NOT_FOUND;
     }
 
     @Override
     public void handle(Response response) {
-        userInterface.show("Server was crashed by your request, sorry...");
+        userInterface.show("File was not found on server or invalid filePath! You can see directory tree by command GET_INFO");
     }
 }

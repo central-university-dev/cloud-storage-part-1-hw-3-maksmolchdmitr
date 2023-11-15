@@ -16,11 +16,13 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 public class ServerApplication {
-    private final int SERVER_PORT;
+    private static final int SO_BACKLOG_OPTION_VALUE = 128;
+
+    private final int serverPort;
     private final Path workDirectory;
 
     public ServerApplication(int serverPort, Path workDirectory) {
-        SERVER_PORT = serverPort;
+        this.serverPort = serverPort;
         this.workDirectory = workDirectory;
     }
 
@@ -39,9 +41,9 @@ public class ServerApplication {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(getChannelInitializer())
-                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .option(ChannelOption.SO_BACKLOG, SO_BACKLOG_OPTION_VALUE)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
-            ChannelFuture future = bootstrap.bind(SERVER_PORT).sync();
+            ChannelFuture future = bootstrap.bind(serverPort).sync();
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();

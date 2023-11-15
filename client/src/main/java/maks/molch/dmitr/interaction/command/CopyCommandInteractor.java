@@ -4,16 +4,16 @@ import maks.molch.dmitr.data.request.CommandType;
 import maks.molch.dmitr.data.request.Request;
 import maks.molch.dmitr.interaction.UserInterface;
 
-public class MoveCommandHandler implements CommandHandler {
+public class CopyCommandInteractor implements CommandInteractor {
     private final UserInterface userInterface;
 
-    public MoveCommandHandler(UserInterface userInterface) {
+    public CopyCommandInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 
     @Override
     public boolean canHandle(CommandType commandType) {
-        return commandType == CommandType.MOVE;
+        return commandType == CommandType.COPY;
     }
 
     @Override
@@ -22,6 +22,6 @@ public class MoveCommandHandler implements CommandHandler {
         String sourceFileName = userInterface.getString("Enter source fileName > ");
         String destinationFilePath = userInterface.getString("Enter destination filePath > ");
         String destinationFileName = userInterface.getString("Enter destination fileName > ");
-        return new Request(CommandType.MOVE, new String[]{sourceFilePath, sourceFileName, destinationFilePath, destinationFileName});
+        return new Request(CommandType.COPY, new String[]{sourceFilePath, sourceFileName, destinationFilePath, destinationFileName});
     }
 }

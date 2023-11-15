@@ -4,20 +4,20 @@ import maks.molch.dmitr.data.response.Response;
 import maks.molch.dmitr.data.response.ResponseStatus;
 import maks.molch.dmitr.interaction.UserInterface;
 
-public class FailedResponseHandler implements ResponseHandler {
+public class AlreadyAuthenticatedResponseInteractor implements ResponseInteractor {
     private final UserInterface userInterface;
 
-    public FailedResponseHandler(UserInterface userInterface) {
+    public AlreadyAuthenticatedResponseInteractor(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
 
     @Override
     public boolean canHandle(Response response) {
-        return response.status() == ResponseStatus.FAILED;
+        return response.status() == ResponseStatus.ALREADY_AUTHENTICATED;
     }
 
     @Override
     public void handle(Response response) {
-        userInterface.show("You send illegal login and/or password");
+        userInterface.show("You was already authenticated!");
     }
 }
