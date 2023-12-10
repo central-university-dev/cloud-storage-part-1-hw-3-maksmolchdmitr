@@ -116,8 +116,7 @@ Response for client: ResponseData{status=INFO, arguments=[], payload=Non-empty}
 
 ### Short command list
 
-*
-*[AUTHENTICATION](https://github.com/central-university-dev/cloud-storage-part-1-hw-3-maksmolchdmitr/tree/develop#authentication) +
+**[AUTHENTICATION](https://github.com/central-university-dev/cloud-storage-part-1-hw-3-maksmolchdmitr/tree/develop#authentication) +
 [LOAD_FILE](https://github.com/central-university-dev/cloud-storage-part-1-hw-3-maksmolchdmitr/tree/develop#load_file) +
 [GET_INFO](https://github.com/central-university-dev/cloud-storage-part-1-hw-3-maksmolchdmitr/tree/develop#get_info) +
 [DOWNLOAD_FILE](https://github.com/central-university-dev/cloud-storage-part-1-hw-3-maksmolchdmitr/tree/develop#download_file) +
